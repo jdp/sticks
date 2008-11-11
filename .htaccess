@@ -1,0 +1,15 @@
+# Use sticks.php, not index.php
+DirectoryIndex sticks.php index.php index.html
+
+# Configure clean URLs
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+	# Some server configurations are picky about RewriteBase.
+	# If rewrites aren't working, it's probably because of this.
+	# This also resolves most error 500 occurrences.
+	# To fix, just point RewriteBase to the current directory.
+    #RewriteBase /
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*)$ sticks.php?$1 [QSA,L]
+</IfModule>

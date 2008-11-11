@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+	
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Sticks Error</title>
+		<style type="text/css">
+			body { margin-left: 25%; margin-right: 25%; font-family: sans-serif; }
+			a { text-decoration: none; border-bottom: dotted gray 1px; color: blue; }
+			a:hover { border-bottom: solid blue 1px; }
+			span.filename { font-family: monospace; background-color: #ffffcc; }
+			p.footing { font-size: smaller; color: gray; }
+			hr { border: 0; height: 1px; color: #cccccc; background-color: #cccccc; }
+		</style>
+	</head>
+	<body>
+		
+		<h1>Oops! An error has occurred.</h1>
+		
+		<?php if ($error['number'] == E_USER_NOTICE): ?>
+			<h2>It's a framework error.</h2>
+			<p><?php echo $error['message'] ?></p>
+		<?php else: ?>
+			<h2>It's a PHP error.</h2>
+			<pre><?php print_r($error) ?></pre>
+		<?php endif; ?>
+		
+		<hr />
+		
+		<p class="footing">Sticks Microframework</p>
+		
+	</body>
+</html>
