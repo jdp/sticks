@@ -2,6 +2,7 @@
 /*
  * Sticks Microframework
  * Copyright (c) 2008 Justin Poliey <jdp34@njit.edu>
+ * http://github.com/jdp/sticks
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -19,27 +20,12 @@
 error_reporting(E_ALL);
 
 /* Basic configuration and error checking */
-define('SCRIPT_PATH',		"scripts");
-define('TEMPLATE_PATH',		"templates");
-define('DEFAULT_SCRIPT',	"default");
-define('DEFAULT_TEMPLATE',	"default");
-define('ERROR_TEMPLATE',	"error");
-
-if (!is_dir(SCRIPT_PATH)) {
-	die("Script path '".SCRIPT_PATH."' does not exist");
-}
-if (!is_dir(TEMPLATE_PATH)) {
-	die("Template path '".TEMPLATE_PATH."' does not exist");
-}
-if (!is_file(sprintf("%s/%s.php", SCRIPT_PATH, DEFAULT_SCRIPT))) {
-	die("Default script '".DEFAULT_SCRIPT."' does not exist");
-}
-if (!is_file(sprintf("%s/%s.html", TEMPLATE_PATH, DEFAULT_TEMPLATE))) {
-	die("Default template '".DEFAULT_TEMPLATE."' does not exist");
-}
-if (!is_file(sprintf("%s/%s.html", TEMPLATE_PATH, ERROR_TEMPLATE))) {
-	die("Error template '".ERROR_TEMPLATE."' does not exist");
-}
+define('SCRIPT_PATH',      "scripts");
+define('TEMPLATE_PATH',    "templates");
+define('CLASS_PATH',       "classes");
+define('DEFAULT_SCRIPT',   "default");
+define('DEFAULT_TEMPLATE', "default");
+define('ERROR_TEMPLATE',   "_error");
 
 class SticksFramework {
 	
@@ -61,9 +47,14 @@ class SticksFramework {
 		include(sprintf("%s/%s.html", TEMPLATE_PATH, ERROR_TEMPLATE));
 		die();
 	}
+	
 }
 
 set_error_handler("SticksFramework::handleError");
+
+function __autoload($class_name) {
+	require_once sprintf("%s/%s.php", CLASS_PATH, strtolower($class_name));
+}
 
 $sticks = new SticksFramework();
 
