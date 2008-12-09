@@ -25,6 +25,7 @@ define('TEMPLATE_PATH',    "templates");
 define('CLASS_PATH',       "classes");
 define('DEFAULT_SCRIPT',   "default");
 define('DEFAULT_TEMPLATE', "default");
+define('CONFIG_SCRIPT',    "config.php");
 define('ERROR_TEMPLATE',   "_error");
 
 class SticksFramework {
@@ -52,11 +53,17 @@ class SticksFramework {
 
 set_error_handler("SticksFramework::handleError");
 
+/* Automatically include class files referenced in scripts */
 function __autoload($class_name) {
 	require_once sprintf("%s/%s.php", CLASS_PATH, strtolower($class_name));
 }
 
 $sticks = new SticksFramework();
+
+/* Execute a configuration script if present */;
+if (file_exists(CONFIG_SCRIPT)) {
+	include CONFIG_SCRIPT;
+}
 
 /* Construct the Sticks request */
 $sticks->request = (strlen($_SERVER['QUERY_STRING']) > 0) ? split("/", $_SERVER['QUERY_STRING']) : array(DEFAULT_SCRIPT);
